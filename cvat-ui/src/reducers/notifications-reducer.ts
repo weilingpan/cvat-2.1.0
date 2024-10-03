@@ -1269,6 +1269,8 @@ export default function (state = defaultState, action: AnyAction): Notifications
             };
         }
         case AnnotationActionTypes.GET_DATA_FAILED: {
+            console.log(state)
+            console.log('FETCH_FRAME_DATA_FAILED action payload:', action.payload);
             return {
                 ...state,
                 errors: {
