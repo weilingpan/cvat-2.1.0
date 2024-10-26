@@ -171,8 +171,12 @@ class UploadMixin(object):
             tus_file = TusFile.create_file(metadata, file_size, self.get_upload_dir())
 
             location = request.build_absolute_uri()
+            print(f"location: {location}")
             if 'HTTP_X_FORWARDED_HOST' not in request.META:
                 location = request.META.get('HTTP_ORIGIN') + request.META.get('PATH_INFO')
+            # fix https: 如果有用 nginx 再轉一次 traefik 的話, 會遇到這個問題
+            # location = request.META.get('HTTP_ORIGIN') + request.META.get('PATH_INFO')
+            print(f"location: {location}")
             return self._tus_response(
                 status=status.HTTP_201_CREATED,
                 extra_headers={'Location': '{}{}'.format(location, tus_file.file_id)})

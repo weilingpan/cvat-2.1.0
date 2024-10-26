@@ -865,6 +865,9 @@ export default function (state = defaultState, action: AnyAction): Notifications
             };
         }
         case AnnotationActionTypes.SAVE_ANNOTATIONS_FAILED: {
+            console.log(state)
+            console.log('AnnotationActionTypes.SAVE_ANNOTATIONS_FAILED:', action.payload);
+            console.log(window.location)
             return {
                 ...state,
                 errors: {
@@ -1009,6 +1012,29 @@ export default function (state = defaultState, action: AnyAction): Notifications
                 id: jobID,
                 taskId: taskID,
             } = job;
+            
+            console.log('AnnotationActionTypes.UPLOAD_JOB_ANNOTATIONS_FAILED:', error);
+            console.log(window.location)
+            // window.location:    {ancestorOrigins: DOMStringList, 
+            //     href: 'https://c5c2-150-117-60-192.ngrok-free.app/tasks/4/jobs/4', 
+            //     origin: 'https://c5c2-150-117-60-192.ngrok-free.app', 
+            //     protocol: 'https:', 
+            //     host: 'c5c2-150-117-60-192.ngrok-free.app', …}
+
+            window.location.href = window.location.host + `/tasks`;
+            // const errorTest = ""
+            // if (!errorTest) {
+            //     window.location.href = `https://c5c2-150-117-60-192.ngrok-free.app/tasks`;
+            //     return;
+            // }
+
+            // const specificErrorMessage = "ServerError: tus: failed to upload chunk at offset 0, caused by [object ProgressEvent], originated";
+
+            // if (error && error.includes(specificErrorMessage)) {
+            //     console.log('error !!!!!!!!!!!!!!!!')
+            //     window.location.href = `https://c5c2-150-117-60-192.ngrok-free.app/tasks`;
+            //     return;
+            // }
 
             return {
                 ...state,

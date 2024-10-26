@@ -44,7 +44,7 @@ services:
       no_proxy: elasticsearch,kibana,logstash,nuclio,opa,${no_proxy}
     labels:
       - traefik.enable=true
-      - traefik.http.services.cvat.loadbalancer.server.port=8080
+      - traefik.http.services.cvat.loadbalancer.server.port=8081
       - traefik.http.routers.cvat.rule=Host(`${CVAT_HOST:-localhost}`) &&
         PathPrefix(`/api/`, `/git/`, `/opencv/`, `/static/`, `/admin`, `/documentation/`, `/django-rq`)
       - traefik.http.routers.cvat.entrypoints=web
@@ -52,8 +52,12 @@ services:
       - cvat_data:/home/django/data
       - cvat_keys:/home/django/keys
       - cvat_logs:/home/django/logs
+      - ./cvat:/home/django/cvat/
     networks:
       - cvat
+    #docker compose up -d
+    #docker exec -it cvat supervisorctl stop runserver
+    #docker exec -it cvat python3 manage.py runserver 0.0.0.0:8081
 
   cvat_ui:
     container_name: cvat_ui
@@ -78,7 +82,7 @@ services:
     command:
       - '--providers.docker.exposedByDefault=false'
       - '--providers.docker.network=cvat'
-      - '--entryPoints.web.address=:8080'
+      - '--entryPoints.web.address=:8081'
       - '--providers.file.directory=/etc/traefik/rules'
     # Uncomment to get Traefik dashboard
     #   - "--entryPoints.dashboard.address=:8090"
@@ -89,7 +93,7 @@ services:
     #   - traefik.http.routers.dashboard.service=api@internal
     #   - traefik.http.routers.dashboard.rule=Host(`${CVAT_HOST:-localhost}`)
     ports:
-      - 8080:8080
+      - 8100:8081
       - 8090:8090
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
