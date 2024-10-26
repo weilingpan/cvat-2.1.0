@@ -1021,19 +1021,18 @@ export default function (state = defaultState, action: AnyAction): Notifications
             //     protocol: 'https:', 
             //     host: 'c5c2-150-117-60-192.ngrok-free.app', …}
 
-            window.location.href = window.location.host + `/tasks`;
-            // const errorTest = ""
-            // if (!errorTest) {
-            //     window.location.href = `https://c5c2-150-117-60-192.ngrok-free.app/tasks`;
-            //     return;
-            // }
-
+            setTimeout(() => {
+                // window.location.href = window.location.host + `/tasks`;
+                window.location.replace(window.location.host + `/tasks`);
+            }, 10000); // 等待 10000 毫秒 (10 秒)
+            
+            // // fail
             // const specificErrorMessage = "ServerError: tus: failed to upload chunk at offset 0, caused by [object ProgressEvent], originated";
-
             // if (error && error.includes(specificErrorMessage)) {
-            //     console.log('error !!!!!!!!!!!!!!!!')
-            //     window.location.href = `https://c5c2-150-117-60-192.ngrok-free.app/tasks`;
-            //     return;
+            //     setTimeout(() => {
+            //         // window.location.href = window.location.host + `/tasks`;
+            //         window.location.replace(window.location.host + `/tasks`);
+            //     }, 10000); // 等待 10000 毫秒 (10 秒)
             // }
 
             return {
@@ -1045,7 +1044,7 @@ export default function (state = defaultState, action: AnyAction): Notifications
                         uploadAnnotations: {
                             message:
                                 'Could not upload annotations for the ' +
-                                `<a href="/tasks/${taskID}/jobs/${jobID}" target="_blank">job ${taskID}</a>`,
+                                `<a href="/tasks/${taskID}/jobs/${jobID}" target="_blank">job ${taskID}</a><br>It will go to login page after 10 seconds.`,
                             reason: error.toString(),
                             className: 'cvat-notification-notice-upload-annotations-fail',
                         },
