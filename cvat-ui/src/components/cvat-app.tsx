@@ -280,6 +280,7 @@ class CVATApplication extends React.PureComponent<CVATAppProps & RouteComponentP
             });
 
             // eslint-disable-next-line no-console
+            console.log('show error from src/components/cvat-app.tsx ~~~~~~~~~~')
             console.error(error);
         }
 

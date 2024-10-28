@@ -171,6 +171,22 @@ const defaultState: NotificationsState = {
 };
 
 export default function (state = defaultState, action: AnyAction): NotificationsState {
+    if (action.type.toLowerCase().includes('failed')) {
+        console.log('error~~~~~~');
+        console.log('action.type: '+action.type);
+        console.log(action.payload);
+        // console.log(action.payload.error);
+        console.log(action.payload.error.message);
+
+        if (action.payload.error.message.includes('Request failed with status code 401.')) {
+            console.log('go to login page ~~~~~');
+            setTimeout(() => {
+                window.location.replace(window.location.host + `/auth/login`);
+                // window.location.reload();
+            }, 5000); // 等待 5000 毫秒 (5 秒)
+        }
+    }
+
     switch (action.type) {
         case AuthActionTypes.AUTHORIZED_FAILED: {
             return {
@@ -1013,18 +1029,18 @@ export default function (state = defaultState, action: AnyAction): Notifications
                 taskId: taskID,
             } = job;
             
-            console.log('AnnotationActionTypes.UPLOAD_JOB_ANNOTATIONS_FAILED:', error);
-            console.log(window.location)
+            // console.log('AnnotationActionTypes.UPLOAD_JOB_ANNOTATIONS_FAILED:', error);
+            // console.log(window.location)
             // window.location:    {ancestorOrigins: DOMStringList, 
             //     href: 'https://c5c2-150-117-60-192.ngrok-free.app/tasks/4/jobs/4', 
             //     origin: 'https://c5c2-150-117-60-192.ngrok-free.app', 
             //     protocol: 'https:', 
             //     host: 'c5c2-150-117-60-192.ngrok-free.app', …}
 
-            setTimeout(() => {
-                // window.location.href = window.location.host + `/tasks`;
-                window.location.replace(window.location.host + `/tasks`);
-            }, 10000); // 等待 10000 毫秒 (10 秒)
+            // setTimeout(() => {
+            //     // window.location.href = window.location.host + `/tasks`;
+            //     window.location.replace(window.location.host + `/tasks`);
+            // }, 10000); // 等待 10000 毫秒 (10 秒)
             
             // // fail
             // const specificErrorMessage = "ServerError: tus: failed to upload chunk at offset 0, caused by [object ProgressEvent], originated";
@@ -1044,7 +1060,7 @@ export default function (state = defaultState, action: AnyAction): Notifications
                         uploadAnnotations: {
                             message:
                                 'Could not upload annotations for the ' +
-                                `<a href="/tasks/${taskID}/jobs/${jobID}" target="_blank">job ${taskID}</a><br>It will go to login page after 10 seconds.`,
+                                `<a href="/tasks/${taskID}/jobs/${jobID}" target="_blank">job ${taskID}</a>`,
                             reason: error.toString(),
                             className: 'cvat-notification-notice-upload-annotations-fail',
                         },

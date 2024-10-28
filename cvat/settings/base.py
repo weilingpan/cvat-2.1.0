@@ -204,6 +204,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'dj_pagination.middleware.PaginationMiddleware',
     'cvat.apps.iam.views.ContextMiddleware',
+
+    'cvat.apps.middleware.auth_middleware.AuthMiddleware'
 ]
 
 UI_URL = ''
