@@ -41,7 +41,7 @@ class AuthMiddleware:
             response.set_cookie(
                 key="access_token",
                 value="ok",
-                domain=f".{domain}"
+                # domain=f".{domain}" #何時需要加何時不用加?
             )
             return response
 
