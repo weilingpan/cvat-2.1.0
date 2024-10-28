@@ -171,21 +171,21 @@ const defaultState: NotificationsState = {
 };
 
 export default function (state = defaultState, action: AnyAction): NotificationsState {
-    if (action.type.toLowerCase().includes('failed')) {
-        console.log('error~~~~~~');
-        console.log('action.type: '+action.type);
-        console.log(action.payload);
-        // console.log(action.payload.error);
-        console.log(action.payload.error.message);
+    // if (action.type.toLowerCase().includes('failed')) {
+    //     console.log('error~~~~~~');
+    //     console.log('action.type: '+action.type);
+    //     console.log(action.payload);
+    //     // console.log(action.payload.error);
+    //     console.log(action.payload.error.message);
 
-        if (action.payload.error.message.includes('Request failed with status code 401.')) {
-            console.log('go to login page ~~~~~');
-            setTimeout(() => {
-                window.location.replace(window.location.host + `/auth/login`);
-                // window.location.reload();
-            }, 5000); // 等待 5000 毫秒 (5 秒)
-        }
-    }
+    //     if (action.payload.error.message.includes('Request failed with status code 401.')) {
+    //         console.log('go to login page ~~~~~');
+    //         setTimeout(() => {
+    //             window.location.replace(window.location.host + `/auth/login`);
+    //             // window.location.reload();
+    //         }, 5000); // 等待 5000 毫秒 (5 秒)
+    //     }
+    // }
 
     switch (action.type) {
         case AuthActionTypes.AUTHORIZED_FAILED: {

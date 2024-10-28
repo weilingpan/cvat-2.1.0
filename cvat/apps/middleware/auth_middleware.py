@@ -11,7 +11,8 @@ class AuthMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        if "/auth/login" in request.build_absolute_uri():
+        if "/api/custom/login" in request.build_absolute_uri():
+            print(f"[{self.__class__.__name__ }] ignore auth check")
             response = self.get_response(request)
             return response
         
@@ -34,7 +35,9 @@ class AuthMiddleware:
 
         # 2. call refresh_token to update access_token
         if refresh_token == 'update':
+            print(f"[{self.__class__.__name__ }] call refresh_token to update access_token")
             domain = request.get_host()
+            response = self.get_response(request)
             response.set_cookie(
                 key="access_token",
                 value="ok",

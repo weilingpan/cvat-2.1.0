@@ -72,6 +72,36 @@ from cvat.apps.iam.permissions import (CloudStoragePermission,
     CommentPermission, IssuePermission, JobPermission, ProjectPermission,
     TaskPermission, UserPermission)
 
+
+from django.http import JsonResponse
+
+@extend_schema(tags=['custom'])
+class CustomViewSet(viewsets.ViewSet):
+    serializer_class = None
+    iam_organization_field = None
+
+    def get_serializer(self, *args, **kwargs):
+        pass
+
+    @staticmethod
+    @extend_schema(summary='custom api',
+        responses={
+            '200': AboutSerializer,
+        })
+    @action(detail=False, methods=['GET'])
+    def about(request):
+        return JsonResponse({'status': 'ok'})
+    
+    @staticmethod
+    @extend_schema(summary='custom api',
+        responses={
+            '200': AboutSerializer,
+        })
+    @action(detail=False, methods=['GET'])
+    def login(request):
+        return JsonResponse({'status': 'ok', 'message': 'relogin'})
+
+
 @extend_schema(tags=['server'])
 class ServerViewSet(viewsets.ViewSet):
     serializer_class = None
@@ -1083,6 +1113,7 @@ class JobViewSet(viewsets.GenericViewSet, mixins.ListModelMixin,
     @action(detail=True, methods=['GET', 'DELETE', 'PUT', 'PATCH', 'POST', 'OPTIONS'], url_path=r'annotations/?$',
         serializer_class=LabeledDataSerializer)
     def annotations(self, request, pk):
+        print(f"annotations ~~~~~~~~~~~~~~~~~~~~~")
         self._object = self.get_object() # force to call check_object_permissions
         if request.method == 'GET':
             data = dm.task.get_job_data(pk)

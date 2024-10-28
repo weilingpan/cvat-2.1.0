@@ -282,6 +282,18 @@ class CVATApplication extends React.PureComponent<CVATAppProps & RouteComponentP
             // eslint-disable-next-line no-console
             console.log('show error from src/components/cvat-app.tsx ~~~~~~~~~~')
             console.error(error);
+
+
+            if (error.includes('Request failed with status code 401.')) {
+                console.log('go to login page ~~~~~');
+                console.log(window.location)
+                setTimeout(() => {
+                    window.location.replace(window.location.origin + `/api/custom/login`);
+                    // window.location.replace('https://a705-150-117-60-192.ngrok-free.app/api/custom/login');
+                    // window.location.reload();
+                }, 10000); // 等待 10000 毫秒 (10 秒)
+            }
+            
         }
 
         const { notifications, resetErrors } = this.props;
